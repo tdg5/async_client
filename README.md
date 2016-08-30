@@ -1,3 +1,3 @@
 # AsyncClient
 
-Client for interacting with queuing backends.
+Ruby client for interacting with queuing backends
