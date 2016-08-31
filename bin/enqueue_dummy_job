@@ -3,9 +3,10 @@
 require "bundler/setup"
 require "async_client/clients/qless"
 
-host = ENV["QLESS_HOST"] || "localhost"
-port = ENV["QLESS_PORT"] || 6379
-async_client = AsyncClient::Clients::Qless.build_async_client(host, port)
+client_config = {}
+client_config[:host] = ENV["QLESS_HOST"] || "localhost"
+client_config[:port] = ENV["QLESS_PORT"] || 6379
+async_client = AsyncClient::Clients::Qless.build_async_client(client_config)
 
 queue_name = ENV["QLESS_QUEUE"] || "default"
 msg = ENV["MSG"] || "Hello, World!"

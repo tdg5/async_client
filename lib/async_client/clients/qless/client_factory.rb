@@ -5,18 +5,27 @@ module AsyncClient
   module Clients
     module Qless
       class ClientFactory
-        def initialize(config = {})
-          @config = config
+        FIVE_MINUTES = 5 * 60
+        ONE_HOUR = 60 * 60
+
+        def self.build_async_client(client_config)
+          qless_async_client = build_qless_async_client(client_config)
+          AsyncClient::Client.new(qless_async_client)
         end
 
-        def product
-          return @client if @client
-          client_config = {}
-          client_config[:host] = @config[:host] if @config.key?(:host)
-          client_config[:port] = @config[:port] if @config.key?(:port)
-          qless_client = ::Qless::Client.new(client_config)
+        def self.build_qless_async_client(client_config)
+          qless_client = build_qless_client(client_config)
           qless_async_client = AsyncClient::Clients::Qless::Client.new(qless_client)
-          @client = qless_async_client
+          qless_async_client
+        end
+
+        def self.build_qless_client(client_config)
+          qless_client = ::Qless::Client.new(client_config)
+          qless_client.config['heartbeat'] = FIVE_MINUTES
+          qless_client.config['jobs-history'] = 6 * ONE_HOUR
+          qless_client.config['jobs-history-count'] = 1000
+          qless_client.config['max-worker-age'] = ONE_HOUR
+          qless_client
         end
       end
     end
