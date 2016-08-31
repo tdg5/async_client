@@ -1,8 +1,12 @@
 module AsyncClient
   module Jobs
     class DummyJob
-      def self.perform(job)
-        puts job.data["msg"] || "#{Process.pid} :: DummyJob"
+      include AsyncClient::UnitOfWork
+
+      DEFAULT_QUEUE = "test"
+
+      def exec
+        puts @msg || "#{Process.pid} :: DummyJob"
       end
     end
   end

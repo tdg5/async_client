@@ -6,9 +6,11 @@ module AsyncClient
           @client = qless_client
         end
 
-        def enqueue(queue_name, job_class, data)
-          q = queue(queue_name)
-          q.put(job_class, data)
+        def enqueue(data, enqueue_options)
+          unit_of_work = enqueue_options.fetch(:unit_of_work)
+          queue_name = enqueue_options.fetch(:queue)
+          qless_queue = queue(queue_name)
+          qless_queue.put(unit_of_work, data)
         end
 
         def pop(queue_name)

@@ -4,8 +4,8 @@ module AsyncClient
       @client = concrete_client
     end
 
-    def enqueue(queue_name, job_class, data)
-      @client.enqueue(queue_name, job_class, data)
+    def enqueue(data, enqueue_options)
+      @client.enqueue(data, enqueue_options)
     end
 
     def pop(queue_name)
