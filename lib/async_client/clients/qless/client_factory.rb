@@ -24,7 +24,7 @@ module AsyncClient
           qless_client.config['heartbeat'] = FIVE_MINUTES
           qless_client.config['jobs-history'] = 6 * ONE_HOUR
           qless_client.config['jobs-history-count'] = 1000
-          qless_client.config['max-worker-age'] = ONE_HOUR
+          qless_client.config['max-worker-age'] = FIVE_MINUTES
           qless_client
         end
       end
