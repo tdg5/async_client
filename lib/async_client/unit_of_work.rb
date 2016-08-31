@@ -28,15 +28,15 @@ module AsyncClient
         instance.after_exec if instance.respond_to?(:after_exec)
       end
 
-      def perform(job)
+      def perform(async_job)
         instance = new
-        instance.import_data(job.data)
-        instance.instance_variable_set(:@job, job)
+        instance.import_data(async_job.data)
+        instance.instance_variable_set(:@async_job, async_job)
         exec_instance(instance)
       end
     end
 
-    attr_reader :job
+    attr_reader :async_job
 
     def exec
     end
