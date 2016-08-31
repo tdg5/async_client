@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "async_client/clients/qless"
+
+host = ENV["QLESS_HOST"] || "localhost"
+port = ENV["QLESS_PORT"] || 6379
+async_client = AsyncClient::Clients::Qless.build_async_client(host, port)
+
+queue_name = ENV["QLESS_QUEUE"] || "default"
+msg = ENV["MSG"] || "Hello, World!"
+
+job_data = { :msg => msg }
+enqueue_opts = { :queue => queue_name, :unit_of_work => "AsyncClient::Jobs::DummyJob", }
+async_client.enqueue(job_data, enqueue_opts)
