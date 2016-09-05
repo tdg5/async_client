@@ -31,12 +31,13 @@ module AsyncClient
       def perform(async_job)
         instance = new
         instance.import_data(async_job.data)
+        instance.instance_variable_set(:@async_client, async_job.client)
         instance.instance_variable_set(:@async_job, async_job)
         exec_instance(instance)
       end
     end
 
-    attr_reader :async_job
+    attr_reader :async_client, :async_job
 
     def exec
     end
