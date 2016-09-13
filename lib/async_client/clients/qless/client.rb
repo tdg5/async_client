@@ -10,7 +10,10 @@ module AsyncClient
           unit_of_work = enqueue_options.fetch(:unit_of_work)
           queue_name = enqueue_options.fetch(:queue)
           qless_queue = queue(queue_name)
-          qless_queue.put(unit_of_work, data)
+          jid = enqueue_options[:id]
+          qless_enqueue_options = {}
+          qless_enqueue_options[:jid] = jid if jid
+          qless_queue.put(unit_of_work, data, qless_enqueue_options)
         end
 
         def pop(queue_name)
