@@ -28,6 +28,20 @@ module AsyncClient
         def queues
           @client.queues
         end
+
+        def recur(data, options)
+          job_class = options.fetch(:class)
+          frequency = options.fetch(:frequency)
+          @client.recur(job_class, data, frequency, options)
+        end
+
+        def schedule(data, options)
+          job_class = options.fetch(:class)
+          _delay = options.fetch(:delay)
+          queue_name = option.fetch(:queue_name)
+          q = queue(queue_name)
+          q.put(job_class, data, options)
+        end
       end
     end
   end

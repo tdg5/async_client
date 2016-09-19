@@ -19,5 +19,13 @@ module AsyncClient
     def queues
       @client.queues
     end
+
+    def recur(data, options)
+      @client.recur(data, options)
+    end
+
+    def schedule(data, options)
+      @client.schedule(data, options)
+    end
   end
 end
